@@ -10,6 +10,20 @@ from fastapi import FastAPI, HTTPException
 app = FastAPI()
 
 ua = UserAgent()
+import socket
+
+def get_ipv4():
+    hostname = socket.gethostname()
+    ip_addresses = socket.getaddrinfo(hostname, None)
+    ipv4_addresses = [addr[4][0] for addr in ip_addresses if addr[0] == socket.AF_INET]
+    return ipv4_addresses[0] if ipv4_addresses else None
+
+ipv4_address = get_ipv4()
+if ipv4_address:
+    print("Your IPv4 address is:", ipv4_address)
+else:
+    print("Unable to retrieve IPv4 address.")
+
 # Your existing code
 
 def read_proxies_from_file(file_path):
